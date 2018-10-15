@@ -12,11 +12,12 @@ library(p8105.datasets)
 
 #Import and organize dataset including cleaning names, filter certain obs and change variable type
 brfss = janitor::clean_names(brfss_smart2010) %>% 
-        filter(topic == "Overall Health" & response == c("Excellent", "Poor")) %>% 
-        mutate(response = factor(response, levels = c("Excellent","Poor")))
+        filter(topic == "Overall Health") %>% 
+        mutate(response = factor(response, levels = c("Excellent","Very good","Good","Fair","Poor")))
 
 #Group datasets by years and locations for following analyses 
 loc_count = group_by(brfss,year,locationabbr) %>% 
+            distinct(year, locationabbr,locationdesc) %>% 
             summarise(loc_number = n())
 ```
 
@@ -120,7 +121,7 @@ Comment: For baking ingredients, Light Brown Sugar is trending; For dog food car
 # Note: product such as "Bag Pink Lady Apples" or "Large Pink Lady Apples" are not included because they might refer to different products instead of "Pink Lady Apples".
 instacart %>% 
   filter(product_name %in% c("Pink Lady Apples", "Coffee Ice Cream")) %>% 
-  group_by(order_dow) %>% 
+  group_by(product_name,order_dow) %>% 
   summarise(mean_hour = mean(order_hour_of_day)) %>% 
   mutate(order_dow = factor(order_dow, levels = rep(0:6)), order_dow = recode(order_dow, "0" = "Sunday", "1" = "Monday", "2" = "Tuesday", "3" = "Wednesday", "4" = "Thursday", "5" = "Friday", "6" = "Saturday")) %>% 
   spread(key = order_dow, value = mean_hour)
