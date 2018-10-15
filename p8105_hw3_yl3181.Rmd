@@ -94,3 +94,11 @@ group_insta_aisle = group_by(instacart,aisle) %>%
 
 + How many aisles are there: `r nrow(distinct(instacart,aisle))`. Which aisles are the most items ordered from: `r as.character(group_insta_aisle[1,1])`
 (Comment: Among all the 134 aisles, `r as.character(group_insta_aisle[1,1])` is the top-selling aisle.)
+
++ Make a plot that shows the number of items ordered in each aisle. Order aisles sensibly, and organize your plot so others can read it.
+```{r}
+ggplot(instacart,aes(x = aisle_id)) + geom_bar()
+```
+
+Comment: As we can see, orders for fresh vegetable and fresh fruits are far more than other aisles.
+
