@@ -19,3 +19,6 @@ brfss = janitor::clean_names(brfss_smart2010) %>%
 loc_count = group_by(brfss,year,locationabbr) %>% 
             summarise(loc_number = n())
 ```
+
++ In 2002, states observed at 7 locations is `r loc_count[loc_count$year==2002 & loc_count$loc_number == 7,]$locationabbr`;
+(Comment: This means that the response rate for overall health topics are relatively high in these two states in 2002.)
