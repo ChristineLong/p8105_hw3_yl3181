@@ -45,3 +45,13 @@ brfss %>%
 ```
 Comment: From the table, we can see that the proportion of excellent response for overall health topics are consistent with all these years (around 0.32), but the variance of the response increases at 2010. 
 
+```{r}
+# Group original data by year, state and response, then calculate the mean of proportions
+brfss_group = janitor::clean_names(brfss_smart2010) %>% 
+        filter(topic == "Overall Health") %>% 
+        mutate(response = factor(response)) %>% 
+        group_by(year,locationabbr, response) %>% 
+        mutate(n_resp = sum(sample_size), prop_resp = sample_size / n_resp)
+
+ggplot(brfss_group,aes(x = year, y = prop_resp, color = locationabbr)) + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + geom_line() + facet_grid(~response)
+```
