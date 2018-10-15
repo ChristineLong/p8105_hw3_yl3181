@@ -67,3 +67,10 @@ sum_insta = skimr::skim(instacart) %>%
 
 knitr::kable(sum_insta)
 ```
+
+
+```{r}
+#Generate summary to describe types of variables
+sum_insta_type = group_by(sum_insta,type) %>% 
+                summarise(type_n = n())
+```
