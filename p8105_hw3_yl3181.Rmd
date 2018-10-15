@@ -1,0 +1,21 @@
+---
+title: "p8105_hw3_yl3181"
+author: "Yuelin"
+date: "October 13, 2018"
+output: github_document
+---
+
+#Problem 1
+```{r}
+library(tidyverse)
+library(p8105.datasets)
+
+#Import and organize dataset including cleaning names, filter certain obs and change variable type
+brfss = janitor::clean_names(brfss_smart2010) %>% 
+        filter(topic == "Overall Health" & response == c("Excellent", "Poor")) %>% 
+        mutate(response = factor(response, levels = c("Excellent","Poor")))
+
+#Group datasets by years and locations for following analyses 
+loc_count = group_by(brfss,year,locationabbr) %>% 
+            summarise(loc_number = n())
+```
