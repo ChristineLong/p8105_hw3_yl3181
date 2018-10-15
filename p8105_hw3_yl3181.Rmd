@@ -102,3 +102,13 @@ ggplot(instacart,aes(x = aisle_id)) + geom_bar()
 
 Comment: As we can see, orders for fresh vegetable and fresh fruits are far more than other aisles.
 
++ Make a table showing the most popular item in each of the aisles "baking ingredients", "dog food care", and "packaged vegetables fruits".
+```{r}
+# Grouped data by aisle and items, and generate total count of observations
+instacart %>% 
+  filter(aisle %in% c("baking ingredients", "dog food care", "packaged vegetables fruits")) %>% 
+  group_by(aisle,product_name) %>% 
+  summarise(item_n = n()) %>% 
+  filter(min_rank(desc(item_n))==1)
+```
+Comment: For baking ingredients, Light Brown Sugar is trending; For dog food care, Snack Sticks Chicken & Rice Recipe Dog Treats is trending; For packaged vegetables fruits, Organic Baby Spinach is trending.
