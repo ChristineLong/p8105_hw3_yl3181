@@ -141,3 +141,17 @@ Data summary:
 knitr::kable(ny_noaa[2570055:2570058,])
 ```
 
+```{r}
+#Create separate variables for year, month, and day. Change temperature, precipitation, and snowfall into reasonable units. 
+clean_ny_noaa = ny_noaa %>% 
+  na.omit() %>% 
+  separate(date, into = c("year","month","day"), sep = "-") %>% 
+  mutate(prcp = prcp/10, tmax = as.numeric(tmax)/10, tmin = as.numeric(tmin)/10)
+
+# Generate mode for snow
+mode_snow = group_by(clean_ny_noaa, snow) %>% 
+  summarise(n = n()) %>% 
+  filter(min_rank(desc(n))==1)
+```
+
+
