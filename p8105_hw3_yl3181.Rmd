@@ -22,3 +22,12 @@ loc_count = group_by(brfss,year,locationabbr) %>%
 
 + In 2002, states observed at 7 locations is `r loc_count[loc_count$year==2002 & loc_count$loc_number == 7,]$locationabbr`;
 (Comment: This means that the response rate for overall health topics are relatively high in these two states in 2002.)
++ A "spaghetti plot" that shows the number of locations in each state from 2002 to 2010:
+```{r}
+#Spaghetti plot
+ggplot(data = loc_count,aes(x = year, y = loc_number, color = locationabbr)) + geom_line()
+```
+
+Comment: 
+1. From the spaghetti plot, we can see that the response rate in Florida is very inconsistent. In 2007 and 2010, the number of locations in FL reached 40 or more, but in other years, the numbers of locations in FL all below 10;
+2. In general, New Jersey has relatively more locations with response, especially in recent years; while Alaska has relatively less locations.
