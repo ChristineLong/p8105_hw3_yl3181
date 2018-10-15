@@ -74,3 +74,12 @@ knitr::kable(sum_insta)
 sum_insta_type = group_by(sum_insta,type) %>% 
                 summarise(type_n = n())
 ```
+
++ The data structure is `r attributes(instacart)$class[3]`
++ The data includes `r nrow(instacart)` observations and `r ncol(instacart)` variables;
++ Among all these variables, `r as.numeric(sum_insta_type[1,2])` variables are `r as.character(sum_insta_type[1,1])`, and `r as.numeric(sum_insta_type[2,2])` variables are `r as.character(sum_insta_type[2,1])`; 
++ Some key variables are `r as.character(sum_insta[10:14,1])`;
++ Some examples of observations are as follows:
+```{r echo=FALSE}
+knitr::kable(head(instacart,3))
+```
