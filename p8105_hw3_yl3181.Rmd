@@ -53,11 +53,12 @@ brfss_group = brfss %>%
 
 ggplot(brfss_group,aes(x = year, y = mean_prop, color = locationabbr)) + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + geom_line() + facet_grid(~response)
 ```
-
+Comment: As we can see, the overall proportion of response "Poor" is the lowest, while the overall proportion of response "Very good" is the highest.
 
 
 # Problem 2
 ```{r}
+#Generate summary for the whole dataset
 sum_insta = skimr::skim(instacart) %>%
             select(variable:stat,value) %>%
             filter(stat != "hist") %>%
