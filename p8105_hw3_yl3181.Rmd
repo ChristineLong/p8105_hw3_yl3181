@@ -27,7 +27,11 @@ loc_count = group_by(brfss,year,locationabbr) %>%
 + A "spaghetti plot" that shows the number of locations in each state from 2002 to 2010:
 ```{r}
 #Spaghetti plot
-ggplot(data = loc_count,aes(x = year, y = loc_number, color = locationabbr)) + geom_line()
+ggplot(data = loc_count,aes(x = year, y = loc_number, color = locationabbr)) + geom_line() + 
+  labs(
+    title = "Number of locations in each state from 2002 to 2010",
+    x = "Number of locations"
+  )
 ```
 
 Comment: 
@@ -51,7 +55,11 @@ brfss_group = brfss %>%
         group_by(year,locationabbr, response) %>% 
         summarize(mean_prop = mean(data_value))
 
-ggplot(brfss_group,aes(x = year, y = mean_prop, color = locationabbr)) + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + geom_line() + facet_grid(~response)
+ggplot(brfss_group,aes(x = year, y = mean_prop, color = locationabbr)) + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + geom_line() + facet_grid(~response) + 
+  labs(
+    title = "Average proportion in each response category",
+    x = "Mean proportion"
+  )
 ```
 Comment: As we can see, the overall proportion of response "Poor" is the lowest, while the overall proportion of response "Very good" is the highest.
 
@@ -96,7 +104,12 @@ group_insta_aisle = group_by(instacart,aisle) %>%
 
 + Make a plot that shows the number of items ordered in each aisle. Order aisles sensibly, and organize your plot so others can read it.
 ```{r}
-ggplot(instacart,aes(x = aisle_id)) + geom_bar()
+ggplot(instacart,aes(x = aisle_id)) + geom_bar() + 
+  labs(
+    title = "Number of items ordered in each aisle",
+    x = "The ID of aisles",
+    y = "number of items ordered"
+  )
 ```
 
 Comment: As we can see, orders for fresh vegetable and fresh fruits are far more than other aisles.
@@ -108,7 +121,7 @@ instacart %>%
   filter(aisle %in% c("baking ingredients", "dog food care", "packaged vegetables fruits")) %>% 
   group_by(aisle,product_name) %>% 
   summarise(item_n = n()) %>% 
-  filter(min_rank(desc(item_n))==1)
+  filter(min_rank(desc(item_n)) == 1)
 ```
 Comment: For baking ingredients, Light Brown Sugar is trending; For dog food care, Snack Sticks Chicken & Rice Recipe Dog Treats is trending; For packaged vegetables fruits, Organic Baby Spinach is trending.
 
@@ -167,10 +180,14 @@ mode_snow = group_by(clean_ny_noaa, snow) %>%
 # Generate grouped average tmax for Jan and Jul. Month, year and day remained character variables deliberately. 
 noaa_tmax_mean = clean_ny_noaa %>% 
                 filter(month == c("01","07")) %>% 
-                group_by(year,month) %>% 
+                group_by(year,month,id) %>% 
                 summarise(mean_tmax = mean(tmax)) 
   
-ggplot(noaa_tmax_mean, aes(x = as.numeric(year), y = mean_tmax, color = month)) + geom_point() + geom_smooth(se = FALSE) + facet_grid(~month)
+ggplot(noaa_tmax_mean, aes(x = as.numeric(year), y = mean_tmax, color = as.factor(id))) + geom_point(alpha = 0.2) + geom_line()  + facet_grid(~month) + 
+  labs(
+    title = "Average max temperature in January and in July in each station across years",
+    x = "Year",
+    y = "Maximum temperature average") + theme(legend.position = "none")
 ```
 
 + Is there any observable / interpretable structure:
@@ -198,11 +215,18 @@ Comment: As we can see, there are more outliers in January than July, indicating
 #Make the first plot: tmax vs. tmin
 temp_plot = clean_ny_noaa %>% 
             gather(key = temp_type, value = temp, tmax:tmin) %>% 
-            ggplot(aes(x = temp, fill = temp_type)) + geom_density(alpha = .4)
+            ggplot(aes(x = temp, fill = temp_type)) + geom_density(alpha = .4) + 
+  labs(
+    title = "Maximum temperature vs. minimal temperature",
+    x = "Temperature")
 #Make the second plot: snowfall (within (0,100)) distribution with years
 snow_plot = clean_ny_noaa %>% 
             filter(snow > 0 & snow < 100) %>% 
-            ggplot(aes(x = as.numeric(year), y = snow)) + geom_smooth(se = FALSE)
+            ggplot(aes(x = as.numeric(year), y = snow)) + geom_smooth(se = FALSE) + 
+  labs(
+    title = "Distribution of snowfall by year",
+    x = "Year",
+    y = "Snow fall amount")
 
 #Combine plots
 library(patchwork)
