@@ -157,4 +157,18 @@ mode_snow = group_by(clean_ny_noaa, snow) %>%
 + The most commonly observed value for snowfall is `r as.numeric(mode_snow[1,1])`
 (Comment: As we can see, most of the times, new york don't have snowfall.)
 
++ Make a two-panel plot showing the average max temperature in January and in July in each station across years. 
+```{r}
+# Generate grouped average tmax for Jan and Jul. Month, year and day remained character variables deliberately. 
+noaa_tmax_mean = clean_ny_noaa %>% 
+                filter(month == c("01","07")) %>% 
+                group_by(year,month) %>% 
+                summarise(mean_tmax = mean(tmax)) 
+  
+ggplot(noaa_tmax_mean, aes(x = as.numeric(year), y = mean_tmax, color = month)) + geom_point() + geom_smooth(se = FALSE) + facet_grid(~month)
+```
+
++ Is there any observable / interpretable structure:
+As we can see, in new york, the average maximum temperature in July is relatively stable around 27 centigrade through all these decades; while the maximum temperature in January drastically increased for 5 centigrade during 1980 to 1990, and was relatively stable ever after.
+
 
