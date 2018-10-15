@@ -188,4 +188,24 @@ noaa_tmax_mean %>%
 Comment: As we can see, there are more outliers in January than July, indicating that the average maximum temperature is more irregular in January than in July. 
 
 
++ Make a two-panel plot showing (i) tmax vs tmin for the full dataset; (ii) make a plot showing the distribution of snowfall values greater than 0 and less than 100 separately by year.
+```{r}
+#Make the first plot: tmax vs. tmin
+temp_plot = clean_ny_noaa %>% 
+            gather(key = temp_type, value = temp, tmax:tmin) %>% 
+            ggplot(aes(x = temp, fill = temp_type)) + geom_density(alpha = .4)
+#Make the second plot: snowfall (within (0,100)) distribution with years
+snow_plot = clean_ny_noaa %>% 
+            filter(snow > 0 & snow < 100) %>% 
+            ggplot(aes(x = as.numeric(year), y = snow)) + geom_smooth(se = FALSE)
+
+#Combine plots
+library(patchwork)
+temp_plot / snow_plot
+```
+
+Comment: For the first plot, we can see that the distribution for maximum temperature and minimum temperature are similar, but the maximum temperature are greater than the minimal one; for the seond plot, we can see that the snowfall follows a cycle, and will reach a peak once every few years. However, in the recent years, the peak seems to disappear, which might indicate the effect of global warming.
+
+
+
 
