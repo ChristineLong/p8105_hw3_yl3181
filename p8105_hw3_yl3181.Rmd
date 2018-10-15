@@ -154,4 +154,7 @@ mode_snow = group_by(clean_ny_noaa, snow) %>%
   filter(min_rank(desc(n))==1)
 ```
 
++ The most commonly observed value for snowfall is `r as.numeric(mode_snow[1,1])`
+(Comment: As we can see, most of the times, new york don't have snowfall.)
+
 
