@@ -141,6 +141,12 @@ knitr::kable(ny_noaa[2570055:2570058,])
 ```
 
 ```{r}
+skimr::skim(ny_noaa)
+```
+
++ From the summary table, we can see that the missing values are spread out in different variables, and the proportion of different variables are similar, indicating that different stations collect different subset of observations. Therefore, the missing values won't have a big impact on the analyses.
+
+```{r}
 #Create separate variables for year, month, and day. Change temperature, precipitation, and snowfall into reasonable units. 
 clean_ny_noaa = ny_noaa %>% 
   na.omit() %>% 
