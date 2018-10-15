@@ -172,3 +172,20 @@ ggplot(noaa_tmax_mean, aes(x = as.numeric(year), y = mean_tmax, color = month)) 
 As we can see, in new york, the average maximum temperature in July is relatively stable around 27 centigrade through all these decades; while the maximum temperature in January drastically increased for 5 centigrade during 1980 to 1990, and was relatively stable ever after.
 
 
++ Outliers for mean maximum temperature in new york:
+
+January outliers: 
+```{r echo = FALSE}
+noaa_tmax_mean %>% 
+  filter(month == "01" & (mean_tmax<=-4.5 | mean_tmax >= 4.5))
+```
+
+July outliers: 
+```{r echo = FALSE}
+noaa_tmax_mean %>% 
+  filter(month == "07" & (mean_tmax < 25))
+```
+Comment: As we can see, there are more outliers in January than July, indicating that the average maximum temperature is more irregular in January than in July. 
+
+
+
