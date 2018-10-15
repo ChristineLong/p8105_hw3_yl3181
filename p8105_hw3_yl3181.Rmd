@@ -129,3 +129,15 @@ instacart %>%
 Comment: In general, people tends to place order around noon. On Wednesday, people tends to place order at 2PM.
 
 
+#Problem 3
+
+Data summary:
+
++ The data structure is `r attributes(ny_noaa)$class[3]`
++ The data includes `r nrow(ny_noaa)` observations and `r ncol(ny_noaa)` variables;
++ Some key variables are `r names(ny_noaa)[-c(1,5)]`;
++ Some examples of observations are as follows:
+```{r echo=FALSE}
+knitr::kable(ny_noaa[2570055:2570058,])
+```
+
