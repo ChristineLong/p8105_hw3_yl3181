@@ -55,3 +55,15 @@ brfss_group = janitor::clean_names(brfss_smart2010) %>%
 
 ggplot(brfss_group,aes(x = year, y = prop_resp, color = locationabbr)) + theme(axis.text.x = element_text(angle = 60, hjust = 1)) + geom_line() + facet_grid(~response)
 ```
+
+
+
+# Problem 2
+```{r}
+sum_insta = skimr::skim(instacart) %>%
+            select(variable:stat,value) %>%
+            filter(stat != "hist") %>%
+            spread(key = stat,value = value)
+
+knitr::kable(sum_insta)
+```
