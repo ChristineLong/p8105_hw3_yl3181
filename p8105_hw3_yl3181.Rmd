@@ -112,3 +112,20 @@ instacart %>%
   filter(min_rank(desc(item_n))==1)
 ```
 Comment: For baking ingredients, Light Brown Sugar is trending; For dog food care, Snack Sticks Chicken & Rice Recipe Dog Treats is trending; For packaged vegetables fruits, Organic Baby Spinach is trending.
+
++ Make a table showing the mean hour of the day at which Pink Lady Apples and Coffee Ice Cream are ordered on each day of the week.
+
+```{r}
+# Grouped data by aisle and items, and generate total count of observations
+# Note: product such as "Bag Pink Lady Apples" or "Large Pink Lady Apples" are not included because they might refer to different products instead of "Pink Lady Apples".
+instacart %>% 
+  filter(product_name %in% c("Pink Lady Apples", "Coffee Ice Cream")) %>% 
+  group_by(order_dow) %>% 
+  summarise(mean_hour = mean(order_hour_of_day)) %>% 
+  mutate(order_dow = factor(order_dow, levels = rep(0:6)), order_dow = recode(order_dow, "0" = "Sunday", "1" = "Monday", "2" = "Tuesday", "3" = "Wednesday", "4" = "Thursday", "5" = "Friday", "6" = "Saturday")) %>% 
+  spread(key = order_dow, value = mean_hour)
+  
+```
+Comment: In general, people tends to place order around noon. On Wednesday, people tends to place order at 2PM.
+
+
