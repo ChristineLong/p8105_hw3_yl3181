@@ -83,3 +83,14 @@ sum_insta_type = group_by(sum_insta,type) %>%
 ```{r echo=FALSE}
 knitr::kable(head(instacart,3))
 ```
+
+Answering questions:
+```{r}
+# Grouped data by aisle and generate total count of observations for the first question
+group_insta_aisle = group_by(instacart,aisle) %>% 
+                    summarise(n = n()) %>% 
+                    arrange(desc(n))
+```
+
++ How many aisles are there: `r nrow(distinct(instacart,aisle))`. Which aisles are the most items ordered from: `r as.character(group_insta_aisle[1,1])`
+(Comment: Among all the 134 aisles, `r as.character(group_insta_aisle[1,1])` is the top-selling aisle.)
